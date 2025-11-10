@@ -1,0 +1,371 @@
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro para Coleta de Mudas</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #2d5016 0%, #1a3009 100%); 
+            min-height: 100vh; 
+            padding: 20px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container { 
+            max-width: 500px; 
+            width: 100%;
+            margin: 0 auto; 
+            background: white; 
+            border-radius: 20px; 
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3); 
+            overflow: hidden; 
+        }
+        .header { 
+            background: linear-gradient(135deg, #2d5016 0%, #1a3009 100%); 
+            color: white; 
+            padding: 30px 20px; 
+            text-align: center; 
+        }
+        .header h1 { 
+            font-size: 28px; 
+            margin-bottom: 10px; 
+        }
+        .header-logo { 
+            max-width: 100%; 
+            height: auto; 
+            max-height: 80px; 
+            margin-bottom: 10px; 
+        }
+        .header p { 
+            font-size: 14px; 
+            opacity: 0.9; 
+        }
+        .content { 
+            padding: 30px 20px; 
+        }
+        .screen { 
+            display: none; 
+        }
+        .screen.active { 
+            display: block; 
+            animation: fadeIn 0.4s ease; 
+        }
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(10px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        .welcome-screen { 
+            text-align: center; 
+        }
+        .welcome-logo { 
+            margin-bottom: 20px; 
+        }
+        .welcome-logo img { 
+            width: 250px; 
+            height: 250px; 
+            object-fit: contain; 
+        }
+        .welcome-title { 
+            font-size: 32px; 
+            color: #2d5016; 
+            font-weight: 700; 
+            margin-bottom: 10px; 
+        }
+        .welcome-subtitle { 
+            font-size: 16px; 
+            color: #6c757d; 
+            margin-bottom: 40px; 
+            line-height: 1.6;
+        }
+        .btn { 
+            width: 100%; 
+            padding: 16px; 
+            border: none; 
+            border-radius: 12px; 
+            font-size: 16px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            margin-bottom: 15px; 
+        }
+        .btn-primary { 
+            background: linear-gradient(135deg, #2d5016 0%, #1a3009 100%); 
+            color: white; 
+        }
+        .btn-primary:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 20px rgba(45, 80, 22, 0.4); 
+        }
+        .btn-back { 
+            background: #6c757d; 
+            color: white; 
+        }
+        .btn-back:hover { 
+            background: #5a6268; 
+            transform: translateY(-2px); 
+        }
+        .btn:disabled { 
+            opacity: 0.5; 
+            cursor: not-allowed; 
+            transform: none; 
+        }
+        .form-group { 
+            margin-bottom: 20px; 
+        }
+        .form-group label { 
+            display: block; 
+            margin-bottom: 8px; 
+            font-weight: 600; 
+            color: #495057; 
+            font-size: 14px; 
+        }
+        .form-group label .required { 
+            color: #dc3545; 
+        }
+        .form-group input { 
+            width: 100%; 
+            padding: 14px; 
+            border: 2px solid #dee2e6; 
+            border-radius: 10px; 
+            font-size: 15px; 
+            transition: border-color 0.3s ease; 
+        }
+        .form-group input:focus { 
+            outline: none; 
+            border-color: #2d5016; 
+        }
+        .message { 
+            padding: 15px; 
+            border-radius: 10px; 
+            margin-bottom: 15px; 
+            text-align: center; 
+            font-size: 14px; 
+            display: none; 
+        }
+        .message.success { 
+            background: #d4edda; 
+            color: #155724; 
+            border: 1px solid #c3e6cb; 
+            display: block; 
+        }
+        .message.error { 
+            background: #f8d7da; 
+            color: #721c24; 
+            border: 1px solid #f5c6cb; 
+            display: block; 
+        }
+        .info-box {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #2d5016;
+            margin-bottom: 20px;
+        }
+        .info-box h3 {
+            color: #2d5016;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+        .info-box p {
+            font-size: 14px;
+            color: #495057;
+            line-height: 1.6;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Tela Inicial -->
+        <div id="homeScreen" class="screen active">
+            <div class="header">
+                <img src="https://raw.githubusercontent.com/dr1kk0r1be1r0/DMQ25/main/logo.png" alt="Logo" class="header-logo">
+            </div>
+            <div class="content welcome-screen">
+                <div class="welcome-logo">
+                    <img src="https://raw.githubusercontent.com/dr1kk0r1be1r0/DMQ25/main/logo_square.png" alt="Logo">
+                </div>
+                <h2 class="welcome-title">Bem-vindo!</h2>
+                <p class="welcome-subtitle">Pense diferente. A qualidade começa na raiz.</p>
+                <div class="info-box">
+                    <p style="color: #2d5016; font-size: 14px; font-weight: 600; margin: 0;">
+                        🌱 <strong>Importante:</strong> Preencha nossa lista de presença e colete sua muda.
+                    </p>
+                </div>
+                <button class="btn btn-primary" onclick="showScreen('registerScreen')">📝 Cadastre-se</button>
+            </div>
+        </div>
+        
+        <!-- Tela de Cadastro -->
+        <div id="registerScreen" class="screen">
+            <div class="header">
+                <img src="https://raw.githubusercontent.com/dr1kk0r1be1r0/DMQ25/main/logo.png" alt="Logo" class="header-logo">
+                <p>Preencha seus dados para o cadastro</p>
+            </div>
+            <div class="content">
+                <div id="registerMessage" class="message"></div>
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label>Nome Completo <span class="required">*</span></label>
+                        <input type="text" id="regName" required placeholder="Digite seu nome completo">
+                    </div>
+                    <div class="form-group">
+                        <label>Empresa <span class="required">*</span></label>
+                        <input type="text" id="regEmpresa" required placeholder="Digite o nome da empresa">
+                    </div>
+                    <div class="form-group">
+                        <label>Chapa</label>
+                        <input type="number" id="regChapa" placeholder="Digite o número da chapa (opcional)">
+                    </div>
+                    <div class="form-group">
+                        <label>Telefone <span class="required">*</span></label>
+                        <input type="tel" id="regTelefone" required placeholder="(00) 00000-0000">
+                    </div>
+                    <div class="form-group">
+                        <label>Email <span class="required">*</span></label>
+                        <input type="email" id="regEmail" required placeholder="seu@email.com">
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">✅ Enviar Cadastro</button>
+                    <button type="button" class="btn btn-back" onclick="showScreen('homeScreen')">← Voltar</button>
+                </form>
+                <div class="info-box" style="margin-top: 20px;">
+                    <p style="color: #2d5016; font-size: 14px; font-weight: 600; margin: 0;">
+                        ℹ️ <strong>Observação:</strong> Todos os dados fornecidos serão utilizados exclusivamente para o controle de coleta de mudas.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const CONFIG = {
+            formUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSfR19T47gPytOB5ECV3qUM4kXXfW8JgJkRAkqIWzRrh7GZABA/formResponse',
+            formFields: {
+                name: 'entry.887558715',
+                empresa: 'entry.491763686',
+                chapa: 'entry.961839605',
+                telefone: 'entry.961651067',
+                email: 'entry.1388428156'
+            }
+        };
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function showMessage(elementId, text, type) {
+            const msg = document.getElementById(elementId);
+            msg.textContent = text;
+            msg.className = 'message ' + type;
+            msg.style.display = 'block';
+            
+            if (type === 'success') {
+                setTimeout(() => {
+                    msg.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        function formatPhone(value) {
+            value = value.replace(/\D/g, '');
+            
+            if (value.length <= 10) {
+                value = value.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+            } else {
+                value = value.replace(/(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
+            }
+            
+            return value;
+        }
+
+        document.getElementById('regTelefone').addEventListener('input', function(e) {
+            e.target.value = formatPhone(e.target.value);
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = '⏳ Enviando...';
+
+            const data = {
+                name: document.getElementById('regName').value.trim(),
+                empresa: document.getElementById('regEmpresa').value.trim(),
+                chapa: document.getElementById('regChapa').value.trim() || '',
+                telefone: document.getElementById('regTelefone').value.trim(),
+                email: document.getElementById('regEmail').value.trim()
+            };
+
+            // Validação básica
+            if (!data.name || !data.empresa || !data.telefone || !data.email) {
+                showMessage('registerMessage', '⚠️ Por favor, preencha todos os campos obrigatórios!', 'error');
+                submitBtn.disabled = false;
+                submitBtn.textContent = '✅ Enviar Cadastro';
+                return;
+            }
+
+            // Validação de email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(data.email)) {
+                showMessage('registerMessage', '⚠️ Por favor, insira um email válido!', 'error');
+                submitBtn.disabled = false;
+                submitBtn.textContent = '✅ Enviar Cadastro';
+                return;
+            }
+
+            try {
+                await sendToGoogleForms(data);
+                showMessage('registerMessage', '✅ Cadastro realizado com sucesso!', 'success');
+                
+                // Limpar formulário
+                document.getElementById('registerForm').reset();
+                
+                // Voltar para tela inicial após 2 segundos
+                setTimeout(() => {
+                    showScreen('homeScreen');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = '✅ Enviar Cadastro';
+                }, 2000);
+                
+            } catch (error) {
+                console.error('Erro ao enviar dados:', error);
+                showMessage('registerMessage', '❌ Erro ao enviar cadastro. Tente novamente.', 'error');
+                submitBtn.disabled = false;
+                submitBtn.textContent = '✅ Enviar Cadastro';
+            }
+        });
+
+        async function sendToGoogleForms(data) {
+            const formData = new FormData();
+            formData.append(CONFIG.formFields.name, data.name);
+            formData.append(CONFIG.formFields.empresa, data.empresa);
+            formData.append(CONFIG.formFields.chapa, data.chapa || 'Não informado');
+            formData.append(CONFIG.formFields.telefone, data.telefone);
+            formData.append(CONFIG.formFields.email, data.email);
+
+            console.log('Enviando dados para o formulário...');
+            console.log('URL:', CONFIG.formUrl);
+            console.log('Dados:', {
+                [CONFIG.formFields.name]: data.name,
+                [CONFIG.formFields.empresa]: data.empresa,
+                [CONFIG.formFields.chapa]: data.chapa || 'Não informado',
+                [CONFIG.formFields.telefone]: data.telefone,
+                [CONFIG.formFields.email]: data.email
+            });
+
+            await fetch(CONFIG.formUrl, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: formData
+            });
+
+            console.log('Cadastro enviado com sucesso!');
+        }
+    </script>
+</body>
+</html>
